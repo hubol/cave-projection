@@ -3,11 +3,10 @@ extends Node
 var cave_screen = preload("res://screens/cave_screen/cave_screen.tscn")
 
 func _ready():
-	get_viewport().set_embedding_subwindows(false)
+	get_window().current_screen = 1
+	get_window().mode = Window.MODE_FULLSCREEN
 	var cave = cave_screen.instantiate()
 	add_child(cave)
-	self.visible = true
-	self.position = Vector2i(1920, 0) #1920, 0 for standard second monitor setup
 	self.title = "Cave"
 	self.size = Vector2(1920, 1080)
 
