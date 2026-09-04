@@ -5,34 +5,32 @@ extends Node2D
 
 @onready var _lines: Node2D = $Line2D
 
-var width : int = 2
-var _pressed: bool = false
 var _current_line: Line2D = null
-var line_color : Color
 
 func _ready():
 	pass
 
-func _process(_delta):
-	var pos = get_global_mouse_position()
-	line_color = Global.get_drawing_color()
-	width = Global.tool_size
+static func _create_line():
+	var line_color = Global.get_drawing_color()
+	var width = Global.tool_size
 	
-	if Input.is_action_pressed("ui_left_click"):
-		_pressed = true
-		_current_line = Line2D.new()
-		_current_line.begin_cap_mode = Line2D.LINE_CAP_ROUND
-		_current_line.end_cap_mode = Line2D.LINE_CAP_ROUND
-		_current_line.joint_mode = Line2D.LINE_JOINT_ROUND
-		
-		_current_line.default_color = line_color
-		_current_line.width = width
-		
-		_lines.add_child(_current_line)
-		_current_line.add_point(pos)
-	else:
-		_pressed = false
+	var line = Line2D.new()
+	line.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	line.end_cap_mode = Line2D.LINE_CAP_ROUND
+	line.joint_mode = Line2D.LINE_JOINT_ROUND
+	
+	line.default_color = line_color
+	line.width = width
+	
+	return line
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and _pressed:
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			_current_line = _create_line()
+			_lines.add_child(_current_line)
+		else:
+			_current_line = null
+			
+	if event is InputEventMouseMotion and _current_line:
 		_current_line.add_point(event.position)
