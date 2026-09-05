@@ -27,7 +27,7 @@ color = Color(0.184314, 0.345098, 0.619608, 1)
 [node name="CreatureMask" type="TextureRect" parent="." unique_id=1771660831]
 modulate = Color(0, 0, 0.2, 1)
 custom_minimum_size = Vector2(1024, 1024)
-offset_right = 1921.22
+offset_right = 1920.0
 offset_bottom = 1080.0
 pivot_offset = Vector2(912, 1560)
 texture = ExtResource("5_tg72c")
